@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Super Mario Style Platformer</title>
+    <title>Super Mario HD Platformer</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -13,10 +13,12 @@
             user-select: none;
             -webkit-user-select: none;
             overflow: hidden;
-            background-color: #0f172a;
+            background-color: #0b1329;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         canvas {
-            image-rendering: pixelated;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
         .touch-btn {
             touch-action: none;
@@ -25,66 +27,72 @@
             transform: scale(0.92);
             filter: brightness(0.85);
         }
+        .glow-box {
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans min-h-screen flex flex-col justify-between items-center select-none p-2 md:p-4">
+<body class="bg-slate-950 text-white min-h-screen flex flex-col justify-between items-center select-none p-2 md:p-4">
 
-    <!-- Header Status & Skor -->
-    <header class="w-full max-w-4xl flex justify-between items-center bg-slate-800/80 backdrop-blur border border-slate-700 px-4 py-2 rounded-xl shadow-lg mb-2 z-10">
+    <!-- Header Status & Skor HD -->
+    <header class="w-full max-w-4xl flex justify-between items-center bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-5 py-2.5 rounded-2xl shadow-2xl mb-2 z-10 glow-box">
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-2">
-                <span class="text-xl md:text-2xl">🍄</span>
-                <span id="scoreText" class="font-bold text-yellow-400 text-lg md:text-xl">SKOR: 0</span>
+                <span class="text-2xl filter drop-shadow">🍄</span>
+                <span id="scoreText" class="font-extrabold text-yellow-400 text-lg md:text-xl tracking-wide">SKOR: 0</span>
             </div>
             <div class="flex items-center space-x-2">
-                <span class="text-xl md:text-2xl">🪙</span>
-                <span id="coinsText" class="font-bold text-yellow-300 text-lg md:text-xl">KOIN: 0</span>
+                <span class="text-2xl filter drop-shadow">🪙</span>
+                <span id="coinsText" class="font-extrabold text-amber-300 text-lg md:text-xl tracking-wide">KOIN: 0</span>
             </div>
         </div>
         <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-1">
-                <span class="text-xl md:text-2xl">❤️</span>
-                <span id="livesText" class="font-bold text-red-400 text-lg md:text-xl">x 3</span>
+            <div class="flex items-center space-x-1.5">
+                <span class="text-2xl filter drop-shadow">❤️</span>
+                <span id="livesText" class="font-extrabold text-red-400 text-lg md:text-xl tracking-wide">x 3</span>
             </div>
-            <button id="audioToggle" class="bg-slate-700 hover:bg-slate-600 p-2 rounded-lg text-sm transition">
+            <button id="audioToggle" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 px-3 py-1.5 rounded-xl text-sm font-semibold transition flex items-center gap-1 shadow">
                 🔊 Suara
             </button>
         </div>
     </header>
 
     <!-- Pembungkus Canvas Game -->
-    <main class="relative w-full max-w-4xl flex-1 flex justify-center items-center overflow-hidden rounded-2xl border-2 border-slate-700 bg-sky-400 shadow-2xl">
-        <canvas id="gameCanvas" width="800" height="450" class="w-full h-auto max-h-[70vh] object-contain block"></canvas>
+    <main class="relative w-full max-w-4xl flex-1 flex justify-center items-center overflow-hidden rounded-3xl border-2 border-slate-700/60 bg-slate-900 shadow-2xl glow-box">
+        <canvas id="gameCanvas" width="800" height="450" class="w-full h-auto max-h-[72vh] object-contain block"></canvas>
 
-        <!-- UI Layar Game Over / Menang / Start -->
-        <div id="overlayScreen" class="absolute inset-0 bg-black/75 backdrop-blur-sm flex flex-col justify-center items-center text-center p-6 transition-all duration-300">
-            <h1 id="overlayTitle" class="text-4xl md:text-6xl font-extrabold text-yellow-400 mb-4 drop-shadow-md">
-                SUPER PETUALANGAN
-            </h1>
-            <p id="overlaySubtitle" class="text-slate-200 text-base md:text-lg mb-6 max-w-md">
-                Gunakan panah keyboard (Atas/Kiri/Kanan) atau tombol sentuh di bawah untuk bergerak, melompat, dan mencapai bendera!
-            </p>
-            <button id="startBtn" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-black text-xl px-8 py-4 rounded-2xl shadow-lg hover:shadow-green-500/50 transform transition active:scale-95">
-                Mulai Bermain ▶
-            </button>
+        <!-- UI Layar Game Over / Menang / Start HD -->
+        <div id="overlayScreen" class="absolute inset-0 bg-slate-950/80 backdrop-blur-md flex flex-col justify-center items-center text-center p-6 transition-all duration-300">
+            <div class="bg-slate-900/90 border border-slate-700 p-8 rounded-3xl max-w-lg shadow-2xl flex flex-col items-center">
+                <div class="text-5xl mb-2">⭐</div>
+                <h1 id="overlayTitle" class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 mb-3 drop-shadow-lg tracking-wider">
+                    SUPER MARIO HD
+                </h1>
+                <p id="overlaySubtitle" class="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
+                    Jelajahi dunia HD! Gunakan keyboard (<span class="text-yellow-400 font-semibold">Panah / WASD</span>) atau tombol sentuh untuk berlari, melompat, dan mengumpulkan koin!
+                </p>
+                <button id="startBtn" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-black text-lg md:text-xl px-10 py-4 rounded-2xl shadow-xl shadow-green-600/30 transform transition active:scale-95 border border-green-400/40 tracking-wider">
+                    MULAI BERMAIN ▶
+                </button>
+            </div>
         </div>
     </main>
 
-    <!-- Kontrol Tombol Layar Sentuh untuk HP/Mobile -->
+    <!-- Kontrol Tombol Layar Sentuh Mobile HD -->
     <footer class="w-full max-w-4xl mt-2 flex justify-between items-center px-2 md:px-6 py-1 select-none">
         <!-- Tombol Arah (Kiri / Kanan) -->
         <div class="flex space-x-3">
-            <button id="btnLeft" class="touch-btn w-16 h-16 md:w-20 md:h-20 bg-slate-800/90 border-2 border-slate-600 text-white text-3xl font-bold rounded-2xl shadow-xl flex justify-center items-center active:bg-blue-600">
+            <button id="btnLeft" class="touch-btn w-16 h-16 md:w-20 md:h-20 bg-slate-800/90 border-2 border-slate-600/80 text-cyan-400 text-3xl font-bold rounded-2xl shadow-2xl flex justify-center items-center active:bg-cyan-600 active:text-white backdrop-blur">
                 ◄
             </button>
-            <button id="btnRight" class="touch-btn w-16 h-16 md:w-20 md:h-20 bg-slate-800/90 border-2 border-slate-600 text-white text-3xl font-bold rounded-2xl shadow-xl flex justify-center items-center active:bg-blue-600">
+            <button id="btnRight" class="touch-btn w-16 h-16 md:w-20 md:h-20 bg-slate-800/90 border-2 border-slate-600/80 text-cyan-400 text-3xl font-bold rounded-2xl shadow-2xl flex justify-center items-center active:bg-cyan-600 active:text-white backdrop-blur">
                 ►
             </button>
         </div>
 
         <!-- Tombol Melompat -->
         <div>
-            <button id="btnJump" class="touch-btn w-20 h-20 md:w-24 md:h-24 bg-red-600/90 border-2 border-red-400 text-white text-xl md:text-2xl font-black rounded-full shadow-2xl flex justify-center items-center active:bg-red-700 uppercase tracking-wider">
+            <button id="btnJump" class="touch-btn w-20 h-20 md:w-24 md:h-24 bg-gradient-to-tr from-red-600 to-rose-500 border-2 border-rose-300/60 text-white text-lg md:text-xl font-black rounded-full shadow-2xl shadow-red-600/40 flex justify-center items-center active:bg-red-700 uppercase tracking-wider backdrop-blur">
                 LOMPAT
             </button>
         </div>
@@ -128,46 +136,46 @@
 
                 if (type === 'jump') {
                     osc.type = 'square';
-                    osc.frequency.setValueAtTime(150, now);
-                    osc.frequency.exponentialRampToValueAtTime(600, now + 0.15);
-                    gain.gain.setValueAtTime(0.15, now);
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.exponentialRampToValueAtTime(650, now + 0.15);
+                    gain.gain.setValueAtTime(0.12, now);
                     gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
                     osc.start(now);
                     osc.stop(now + 0.15);
                 } else if (type === 'coin') {
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(987.77, now); // Note B5
-                    osc.frequency.setValueAtTime(1318.51, now + 0.08); // Note E6
-                    gain.gain.setValueAtTime(0.2, now);
+                    osc.frequency.setValueAtTime(987.77, now);
+                    osc.frequency.setValueAtTime(1318.51, now + 0.08);
+                    gain.gain.setValueAtTime(0.18, now);
                     gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
                     osc.start(now);
                     osc.stop(now + 0.25);
                 } else if (type === 'stomp') {
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(200, now);
-                    osc.frequency.linearRampToValueAtTime(50, now + 0.1);
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.linearRampToValueAtTime(60, now + 0.12);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
                     osc.start(now);
-                    osc.stop(now + 0.1);
+                    osc.stop(now + 0.12);
                 } else if (type === 'block') {
                     osc.type = 'square';
-                    osc.frequency.setValueAtTime(220, now);
-                    osc.frequency.setValueAtTime(110, now + 0.05);
-                    gain.gain.setValueAtTime(0.2, now);
+                    osc.frequency.setValueAtTime(240, now);
+                    osc.frequency.setValueAtTime(120, now + 0.06);
+                    gain.gain.setValueAtTime(0.18, now);
                     gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
                     osc.start(now);
                     osc.stop(now + 0.12);
                 } else if (type === 'gameover') {
                     osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(300, now);
-                    osc.frequency.linearRampToValueAtTime(100, now + 0.5);
-                    gain.gain.setValueAtTime(0.3, now);
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.linearRampToValueAtTime(80, now + 0.5);
+                    gain.gain.setValueAtTime(0.25, now);
                     gain.gain.linearRampToValueAtTime(0.01, now + 0.5);
                     osc.start(now);
                     osc.stop(now + 0.5);
                 } else if (type === 'win') {
-                    const notes = [261.63, 329.63, 392.00, 523.25];
+                    const notes = [261.63, 329.63, 392.00, 523.25, 659.25];
                     notes.forEach((freq, idx) => {
                         const noteOsc = audioCtx.createOscillator();
                         const noteGain = audioCtx.createGain();
@@ -175,11 +183,11 @@
                         noteOsc.frequency.value = freq;
                         noteOsc.connect(noteGain);
                         noteGain.connect(audioCtx.destination);
-                        const start = now + idx * 0.12;
-                        noteGain.gain.setValueAtTime(0.2, start);
-                        noteGain.gain.linearRampToValueAtTime(0.01, start + 0.2);
+                        const start = now + idx * 0.10;
+                        noteGain.gain.setValueAtTime(0.18, start);
+                        noteGain.gain.linearRampToValueAtTime(0.01, start + 0.22);
                         noteOsc.start(start);
-                        noteOsc.stop(start + 0.2);
+                        noteOsc.stop(start + 0.22);
                     });
                 }
             } catch(e) { console.error(e); }
@@ -190,12 +198,8 @@
             audioToggle.innerText = soundEnabled ? '🔊 Suara' : '🔇 Mute';
         });
 
-        // Kontrol Input Keyboard & Touch
-        const keys = {
-            left: false,
-            right: false,
-            jump: false
-        };
+        // Input Keyboard
+        const keys = { left: false, right: false, jump: false };
 
         window.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
@@ -216,7 +220,7 @@
             if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === ' ') keys.jump = false;
         });
 
-        // Event Listener Tombol Sentuh Mobile
+        // Kontrol Sentuh Mobile
         const bindTouch = (id, keyName) => {
             const btn = document.getElementById(id);
             const start = (e) => {
@@ -246,90 +250,102 @@
         bindTouch('btnRight', 'right');
         bindTouch('btnJump', 'jump');
 
-        // Parameter & Elemen Game
-        const GRAVITY = 0.55;
+        // Parameter Utama Game
+        const GRAVITY = 0.52;
         let cameraX = 0;
         let gameScore = 0;
         let coinsCollected = 0;
         let lives = 3;
         let isGameStateRunning = false;
+        let globalTick = 0;
 
-        // Player (Karakter Utama)
+        // Player (Mario HD)
         const player = {
             x: 80,
             y: 200,
             width: 32,
-            height: 40,
+            height: 44,
             vx: 0,
             vy: 0,
-            speed: 4.5,
-            jumpStrength: 12.5,
+            speed: 4.8,
+            jumpStrength: 12.8,
             grounded: false,
             facingLeft: false,
             animFrame: 0,
             animTimer: 0
         };
 
-        // Platform & Blok Level
+        // Level Elements
         let platforms = [];
         let coins = [];
         let enemies = [];
         let particles = [];
-        let flag = { x: 2600, y: 150, width: 20, height: 210, reached: false };
+        let flag = { x: 2650, y: 130, width: 24, height: 230, reached: false };
+        let stars = [];
 
-        // Desain Peta / Level Generation
+        // Inisialisasi Bintang untuk Latar Belakang Night Sky
+        for (let i = 0; i < 60; i++) {
+            stars.push({
+                x: Math.random() * 3200,
+                y: Math.random() * 220,
+                size: Math.random() * 2 + 1,
+                alpha: Math.random()
+            });
+        }
+
+        // Generasi Level HD
         function buildLevel() {
             platforms = [];
             coins = [];
             enemies = [];
             particles = [];
 
-            // Tanah Dasar (dengan celah-celah jurang)
+            // Tanah Dasar
             const groundSegments = [
-                { start: 0, width: 800 },
-                { start: 920, width: 600 },
-                { start: 1600, width: 500 },
-                { start: 2180, width: 700 }
+                { start: 0, width: 850 },
+                { start: 980, width: 620 },
+                { start: 1700, width: 550 },
+                { start: 2320, width: 750 }
             ];
 
             groundSegments.forEach(seg => {
                 platforms.push({ x: seg.start, y: 360, width: seg.width, height: 90, type: 'ground' });
             });
 
-            // Blok Melayang (Bricks & Question Blocks)
+            // Blok & Pipa
             const blockData = [
                 // Area Awal
-                { x: 250, y: 260, type: 'question', item: 'coin' },
-                { x: 290, y: 260, type: 'brick' },
-                { x: 330, y: 260, type: 'question', item: 'coin' },
-                { x: 370, y: 260, type: 'brick' },
-                { x: 330, y: 160, type: 'question', item: 'coin' },
+                { x: 250, y: 250, type: 'question', item: 'coin' },
+                { x: 290, y: 250, type: 'brick' },
+                { x: 330, y: 250, type: 'question', item: 'coin' },
+                { x: 370, y: 250, type: 'brick' },
+                { x: 330, y: 150, type: 'question', item: 'coin' },
 
-                // Pipa & Struktur Tinggi
-                { x: 520, y: 300, width: 50, height: 60, type: 'pipe' },
-                { x: 680, y: 270, width: 50, height: 90, type: 'pipe' },
+                // Pipa
+                { x: 550, y: 290, width: 52, height: 70, type: 'pipe' },
+                { x: 720, y: 250, width: 52, height: 110, type: 'pipe' },
 
-                // Area Tengah (Melompati Jurang)
-                { x: 960, y: 260, type: 'brick' },
-                { x: 1000, y: 260, type: 'question', item: 'coin' },
-                { x: 1040, y: 260, type: 'brick' },
-                { x: 1150, y: 200, type: 'brick' },
-                { x: 1190, y: 200, type: 'question', item: 'coin' },
-                { x: 1230, y: 200, type: 'brick' },
+                // Area Tengah
+                { x: 1020, y: 250, type: 'brick' },
+                { x: 1060, y: 250, type: 'question', item: 'coin' },
+                { x: 1100, y: 250, type: 'brick' },
+                { x: 1220, y: 190, type: 'brick' },
+                { x: 1260, y: 190, type: 'question', item: 'coin' },
+                { x: 1300, y: 190, type: 'brick' },
 
-                { x: 1380, y: 280, width: 40, height: 80, type: 'pipe' },
+                { x: 1450, y: 270, width: 52, height: 90, type: 'pipe' },
 
-                // Platform Melayang di Atas Jurang Kedua
-                { x: 1520, y: 280, width: 70, height: 20, type: 'platform' },
-                { x: 1660, y: 220, width: 80, height: 20, type: 'platform' },
-                { x: 1800, y: 260, type: 'question', item: 'coin' },
-                { x: 1840, y: 260, type: 'question', item: 'coin' },
+                // Platform Melayang
+                { x: 1600, y: 270, width: 80, height: 22, type: 'platform' },
+                { x: 1750, y: 210, width: 90, height: 22, type: 'platform' },
+                { x: 1920, y: 250, type: 'question', item: 'coin' },
+                { x: 1960, y: 250, type: 'question', item: 'coin' },
 
-                // Tangga Akhir Menuju Bendera
-                { x: 2300, y: 320, width: 40, height: 40, type: 'brick' },
-                { x: 2340, y: 280, width: 40, height: 80, type: 'brick' },
-                { x: 2380, y: 240, width: 40, height: 120, type: 'brick' },
-                { x: 2420, y: 200, width: 40, height: 160, type: 'brick' }
+                // Tangga Akhir
+                { x: 2420, y: 320, width: 40, height: 40, type: 'brick' },
+                { x: 2460, y: 280, width: 40, height: 80, type: 'brick' },
+                { x: 2500, y: 240, width: 40, height: 120, type: 'brick' },
+                { x: 2540, y: 200, width: 40, height: 160, type: 'brick' }
             ];
 
             blockData.forEach(b => {
@@ -340,29 +356,30 @@
                     height: b.height || 40,
                     type: b.type,
                     item: b.item,
-                    hit: false
+                    hit: false,
+                    bounce: 0
                 });
             });
 
-            // Koin Bebas Melayang
+            // Koin Emas
             const coinPositions = [
-                { x: 250, y: 220 }, { x: 290, y: 220 }, { x: 370, y: 220 },
-                { x: 535, y: 260 }, { x: 695, y: 230 },
-                { x: 1540, y: 240 }, { x: 1680, y: 180 },
-                { x: 2000, y: 320 }, { x: 2040, y: 320 }, { x: 2080, y: 320 }
+                { x: 250, y: 210 }, { x: 290, y: 210 }, { x: 370, y: 210 },
+                { x: 566, y: 250 }, { x: 736, y: 210 },
+                { x: 1630, y: 230 }, { x: 1780, y: 170 },
+                { x: 2100, y: 310 }, { x: 2140, y: 310 }, { x: 2180, y: 310 }
             ];
 
             coinPositions.forEach(c => {
-                coins.push({ x: c.x, y: c.y, width: 18, height: 22, collected: false });
+                coins.push({ x: c.x, y: c.y, width: 20, height: 24, collected: false, floatOffset: Math.random() * Math.PI });
             });
 
-            // Musuh (Goomba Bergaya Cokelat)
+            // Musuh (Goomba HD)
             enemies = [
-                { x: 450, y: 330, width: 30, height: 30, vx: -1.2, alive: true },
-                { x: 800, y: 330, width: 30, height: 30, vx: -1.2, alive: true },
-                { x: 1100, y: 330, width: 30, height: 30, vx: 1.2, alive: true },
-                { x: 1720, y: 330, width: 30, height: 30, vx: -1.5, alive: true },
-                { x: 2100, y: 330, width: 30, height: 30, vx: -1.5, alive: true }
+                { x: 460, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
+                { x: 860, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
+                { x: 1150, y: 328, width: 32, height: 32, vx: 1.3, alive: true, animTick: 0 },
+                { x: 1800, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 },
+                { x: 2220, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 }
             ];
 
             flag.reached = false;
@@ -376,26 +393,28 @@
             player.grounded = false;
         }
 
-        // Efek Partikel Pecahan / Sinar
-        function addParticles(x, y, color, count = 8) {
+        // Tambah Partikel HD
+        function addParticles(x, y, color, count = 10, isSparkle = false) {
             for (let i = 0; i < count; i++) {
                 particles.push({
                     x: x,
                     y: y,
-                    vx: (Math.random() - 0.5) * 6,
-                    vy: (Math.random() - 0.5) * 6 - 2,
-                    size: Math.random() * 5 + 3,
+                    vx: (Math.random() - 0.5) * (isSparkle ? 8 : 6),
+                    vy: (Math.random() - 0.5) * (isSparkle ? 8 : 6) - (isSparkle ? 0 : 2),
+                    size: Math.random() * (isSparkle ? 4 : 6) + 2,
                     color: color,
-                    life: 25
+                    life: 25 + Math.random() * 10,
+                    maxLife: 35
                 });
             }
         }
 
-        // Pembaruan Logika Game
+        // Pembaruan Logika Utama Game
         function update() {
             if (!isGameStateRunning) return;
+            globalTick++;
 
-            // Pergerakan Player
+            // Input Bergerak
             if (keys.left) {
                 player.vx = -player.speed;
                 player.facingLeft = true;
@@ -403,16 +422,13 @@
                 player.vx = player.speed;
                 player.facingLeft = false;
             } else {
-                player.vx *= 0.75; // Gesekan (Friction)
+                player.vx *= 0.78;
             }
 
-            // Gravitasi
             player.vy += GRAVITY;
-
-            // Asumsi grounded sebelum kalkulasi tabrakan
             player.grounded = false;
 
-            // Gerak Horizontal & Tabrakan
+            // Gerak Horizontal & Deteksi Tabrakan
             player.x += player.vx;
             for (let p of platforms) {
                 if (checkCollision(player, p)) {
@@ -421,64 +437,68 @@
                 }
             }
 
-            // Gerak Vertikal & Tabrakan
+            // Gerak Vertikal & Deteksi Tabrakan
             player.y += player.vy;
             for (let p of platforms) {
                 if (checkCollision(player, p)) {
-                    if (player.vy > 0) { // Jatuh menapak di atas platform
+                    if (player.vy > 0) { // Menapak
                         player.y = p.y - player.height;
                         player.vy = 0;
                         player.grounded = true;
-                    } else if (player.vy < 0) { // Sundulan dari bawah
+                    } else if (player.vy < 0) { // Menyundul
                         player.y = p.y + p.height;
                         player.vy = 0;
 
-                        // Efek jika membentur Question Block atau Brick
+                        p.bounce = 8; // Efek animasi membal
+
                         if (p.type === 'question' && !p.hit) {
                             p.hit = true;
                             coinsCollected++;
                             gameScore += 200;
                             playSound('coin');
-                            addParticles(p.x + p.width / 2, p.y, '#facc15');
+                            addParticles(p.x + p.width / 2, p.y, '#fde047', 12, true);
                         } else if (p.type === 'brick') {
                             playSound('block');
-                            addParticles(p.x + p.width / 2, p.y + p.height / 2, '#b45309', 10);
+                            addParticles(p.x + p.width / 2, p.y + p.height / 2, '#d97706', 12);
                         }
                     }
                 }
+
+                // Pengurangan Efek Membal
+                if (p.bounce > 0) p.bounce -= 1;
             }
 
             // Batas Kiri Peta
             if (player.x < 0) player.x = 0;
 
-            // Kamera Mengikuti Karakter
-            cameraX = player.x - 250;
+            // Smooth Camera Follow HD
+            const targetCamX = player.x - 260;
+            cameraX += (targetCamX - cameraX) * 0.1;
             if (cameraX < 0) cameraX = 0;
 
-            // Cek Jatuh ke Jurang
-            if (player.y > canvas.height + 100) {
+            // Jatuh Jurang
+            if (player.y > canvas.height + 80) {
                 handlePlayerDeath();
             }
 
-            // Logika Koin
+            // Logika Koin HD
             coins.forEach(c => {
                 if (!c.collected && checkCollision(player, c)) {
                     c.collected = true;
                     coinsCollected++;
                     gameScore += 100;
                     playSound('coin');
-                    addParticles(c.x + 10, c.y + 10, '#fde047', 6);
+                    addParticles(c.x + 10, c.y + 12, '#fde047', 10, true);
                 }
             });
 
-            // Logika Musuh
+            // Logika Musuh HD
             enemies.forEach(e => {
                 if (!e.alive) return;
 
-                // Gerak Musuh
                 e.x += e.vx;
+                e.animTick++;
 
-                // Membalik arah jika menabrak platform atau jurang
                 platforms.forEach(p => {
                     if (checkCollision(e, p)) {
                         e.vx *= -1;
@@ -486,30 +506,27 @@
                     }
                 });
 
-                // Tabrakan Karakter dengan Musuh
                 if (checkCollision(player, e)) {
-                    // Lompat di atas kepala musuh (Stomp)
-                    if (player.vy > 0 && player.y + player.height - player.vy <= e.y + 12) {
+                    // Stomp (Injak Kepala)
+                    if (player.vy > 0 && player.y + player.height - player.vy <= e.y + 14) {
                         e.alive = false;
-                        player.vy = -8; // Memantul ke atas
+                        player.vy = -8.5;
                         gameScore += 300;
                         playSound('stomp');
-                        addParticles(e.x + e.width / 2, e.y + e.height / 2, '#78350f', 8);
+                        addParticles(e.x + e.width / 2, e.y + e.height / 2, '#92400e', 12);
                     } else {
-                        // Tersentuh dari samping/bawah -> Kalah / Kurang nyawa
                         handlePlayerDeath();
                     }
                 }
             });
 
-            // Logika Mencapai Bendera (Kemenangan)
+            // Logika Bendera (Menang)
             if (!flag.reached && checkCollision(player, flag)) {
                 flag.reached = true;
-                gameScore += 1000 + lives * 500;
+                gameScore += 1200 + lives * 400;
                 playSound('win');
-                setTimeout(() => {
-                    endGame(true);
-                }, 800);
+                addParticles(flag.x + 10, flag.y + 20, '#f43f5e', 25, true);
+                setTimeout(() => { endGame(true); }, 1000);
             }
 
             // Update Partikel
@@ -520,23 +537,22 @@
                 if (part.life <= 0) particles.splice(index, 1);
             });
 
-            // Animasi Berlari
+            // Animasi Lari Mario
             if (Math.abs(player.vx) > 0.5) {
                 player.animTimer++;
-                if (player.animTimer % 6 === 0) {
-                    player.animFrame = (player.animFrame + 1) % 3;
+                if (player.animTimer % 5 === 0) {
+                    player.animFrame = (player.animFrame + 1) % 4;
                 }
             } else {
                 player.animFrame = 0;
             }
 
-            // Update UI Header
+            // Update Header UI
             scoreText.innerText = `SKOR: ${gameScore}`;
             coinsText.innerText = `KOIN: ${coinsCollected}`;
             livesText.innerText = `x ${lives}`;
         }
 
-        // Penanganan Player Mati
         function handlePlayerDeath() {
             lives--;
             playSound('gameover');
@@ -547,7 +563,6 @@
             }
         }
 
-        // Fungsi Deteksi Tabrakan Kotak (AABB)
         function checkCollision(r1, r2) {
             return (
                 r1.x < r2.x + r2.width &&
@@ -557,120 +572,277 @@
             );
         }
 
-        // Rendering / Menggambar Visual Game
+        // ===== RENDERING GRAFIS HD =====
         function render() {
-            // Clear & Latar Belakang Langit
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#38bdf8'; // Sky Blue
+            // Latar Belakang Gradien Langit Malam Senja HD
+            const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            bgGradient.addColorStop(0, '#0f172a');
+            bgGradient.addColorStop(0.5, '#1e1b4b');
+            bgGradient.addColorStop(1, '#312e81');
+            ctx.fillStyle = bgGradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Bintang Gemerlap HD
+            stars.forEach(s => {
+                const alpha = Math.sin(globalTick * 0.05 + s.alpha * 10) * 0.4 + 0.6;
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fillRect(s.x - cameraX * 0.2, s.y, s.size, s.size);
+            });
 
             ctx.save();
             ctx.translate(-Math.floor(cameraX), 0);
 
-            // Awan Dekoratif di Langit
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-            const cloudPositions = [100, 400, 750, 1100, 1500, 1900, 2300];
-            cloudPositions.forEach(cx => {
-                ctx.beginPath();
-                ctx.arc(cx, 80, 25, 0, Math.PI * 2);
-                ctx.arc(cx + 20, 70, 30, 0, Math.PI * 2);
-                ctx.arc(cx + 45, 80, 22, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            // Pegunungan Latar Parallax HD
+            drawHills();
 
-            // Bukit-bukit Latar Belakang
-            ctx.fillStyle = '#16a34a';
-            const hillPositions = [200, 850, 1450, 2100];
-            hillPositions.forEach(hx => {
-                ctx.beginPath();
-                ctx.arc(hx, 360, 90, Math.PI, 0);
-                ctx.fill();
-            });
+            // Awan Parallax HD
+            drawClouds();
 
-            // Platform & Blok
+            // Render Platform & Blok HD
             platforms.forEach(p => {
+                const drawY = p.y - (p.bounce || 0);
+
                 if (p.type === 'ground') {
-                    // Rumput Hijau Atas
-                    ctx.fillStyle = '#22c55e';
-                    ctx.fillRect(p.x, p.y, p.width, 16);
-                    // Tanah Cokelat
-                    ctx.fillStyle = '#854d0e';
-                    ctx.fillRect(p.x, p.y + 16, p.width, p.height - 16);
+                    // Rumput Atas Gradien HD
+                    const grassGrad = ctx.createLinearGradient(p.x, drawY, p.x, drawY + 18);
+                    grassGrad.addColorStop(0, '#4ade80');
+                    grassGrad.addColorStop(1, '#16a34a');
+                    ctx.fillStyle = grassGrad;
+                    ctx.fillRect(p.x, drawY, p.width, 18);
+
+                    // Detail Garis Rumput
+                    ctx.fillStyle = '#bbf7d0';
+                    for (let xG = p.x + 4; xG < p.x + p.width; xG += 16) {
+                        ctx.fillRect(xG, drawY, 3, 6);
+                    }
+
+                    // Tanah Cokelat Bertekstur HD
+                    const dirtGrad = ctx.createLinearGradient(p.x, drawY + 18, p.x, drawY + p.height);
+                    dirtGrad.addColorStop(0, '#92400e');
+                    dirtGrad.addColorStop(1, '#451a03');
+                    ctx.fillStyle = dirtGrad;
+                    ctx.fillRect(p.x, drawY + 18, p.width, p.height - 18);
+
+                    // Pola Tekstur Batuan Tanah
+                    ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                    for (let xD = p.x + 8; xD < p.x + p.width; xD += 32) {
+                        ctx.fillRect(xD, drawY + 28, 12, 10);
+                        ctx.fillRect(xD + 16, drawY + 50, 10, 8);
+                    }
                 } else if (p.type === 'brick') {
-                    ctx.fillStyle = '#b45309';
-                    ctx.fillRect(p.x, p.y, p.width, p.height);
-                    ctx.strokeStyle = '#78350f';
+                    // Blok Batu Bata HD
+                    const brickGrad = ctx.createLinearGradient(p.x, drawY, p.x, drawY + p.height);
+                    brickGrad.addColorStop(0, '#d97706');
+                    brickGrad.addColorStop(1, '#78350f');
+                    ctx.fillStyle = brickGrad;
+                    ctx.fillRect(p.x, drawY, p.width, p.height);
+
+                    ctx.strokeStyle = '#451a03';
                     ctx.lineWidth = 2;
-                    ctx.strokeRect(p.x, p.y, p.width, p.height);
+                    ctx.strokeRect(p.x, drawY, p.width, p.height);
+
+                    // Sekat Garis Semen Bata HD
+                    ctx.strokeStyle = '#fef3c7';
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, drawY + 20); ctx.lineTo(p.x + p.width, drawY + 20);
+                    ctx.moveTo(p.x + 20, drawY); ctx.lineTo(p.x + 20, drawY + 20);
+                    ctx.moveTo(p.x + 10, drawY + 20); ctx.lineTo(p.x + 10, drawY + 40);
+                    ctx.stroke();
                 } else if (p.type === 'question') {
-                    ctx.fillStyle = p.hit ? '#92400e' : '#eab308';
-                    ctx.fillRect(p.x, p.y, p.width, p.height);
+                    // Blok Question (?) HD
+                    const qGrad = ctx.createLinearGradient(p.x, drawY, p.x, drawY + p.height);
+                    if (p.hit) {
+                        qGrad.addColorStop(0, '#78350f');
+                        qGrad.addColorStop(1, '#451a03');
+                    } else {
+                        qGrad.addColorStop(0, '#fde047');
+                        qGrad.addColorStop(0.5, '#eab308');
+                        qGrad.addColorStop(1, '#ca8a04');
+                    }
+                    ctx.fillStyle = qGrad;
+                    ctx.fillRect(p.x, drawY, p.width, p.height);
+
                     ctx.strokeStyle = '#854d0e';
                     ctx.lineWidth = 2;
-                    ctx.strokeRect(p.x, p.y, p.width, p.height);
+                    ctx.strokeRect(p.x, drawY, p.width, p.height);
 
+                    // Tanda Tanya HD dengan Bayangan
                     if (!p.hit) {
+                        ctx.fillStyle = '#78350f';
+                        ctx.font = '900 24px sans-serif';
+                        ctx.fillText('?', p.x + 14, drawY + 29);
                         ctx.fillStyle = '#ffffff';
-                        ctx.font = 'bold 22px sans-serif';
-                        ctx.fillText('?', p.x + 14, p.y + 28);
+                        ctx.fillText('?', p.x + 12, drawY + 28);
                     }
                 } else if (p.type === 'pipe') {
-                    // Pipa Hijau khas Mario
-                    ctx.fillStyle = '#15803d';
-                    ctx.fillRect(p.x, p.y, p.width, p.height);
-                    ctx.fillStyle = '#22c55e';
-                    ctx.fillRect(p.x - 4, p.y, p.width + 8, 20);
-                    ctx.strokeStyle = '#14532d';
-                    ctx.strokeRect(p.x - 4, p.y, p.width + 8, 20);
+                    // Pipa Hijau HD Berkilau
+                    const pipeGrad = ctx.createLinearGradient(p.x, drawY, p.x + p.width, drawY);
+                    pipeGrad.addColorStop(0, '#15803d');
+                    pipeGrad.addColorStop(0.3, '#4ade80');
+                    pipeGrad.addColorStop(0.7, '#22c55e');
+                    pipeGrad.addColorStop(1, '#14532d');
+                    ctx.fillStyle = pipeGrad;
+                    ctx.fillRect(p.x, drawY + 22, p.width, p.height - 22);
+
+                    // Mahkota Pipa Atas
+                    ctx.fillRect(p.x - 5, drawY, p.width + 10, 22);
+                    ctx.strokeStyle = '#052e16';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(p.x - 5, drawY, p.width + 10, 22);
+                    ctx.strokeRect(p.x, drawY + 22, p.width, p.height - 22);
                 } else if (p.type === 'platform') {
+                    // Platform Melayang HD
                     ctx.fillStyle = '#f97316';
-                    ctx.fillRect(p.x, p.y, p.width, p.height);
+                    ctx.fillRect(p.x, drawY, p.width, p.height);
+                    ctx.fillStyle = '#fdba74';
+                    ctx.fillRect(p.x, drawY, p.width, 4);
                 }
             });
 
-            // Tiang & Bendera Finish
-            ctx.fillStyle = '#cbd5e1';
-            ctx.fillRect(flag.x + 8, flag.y, 6, flag.height);
-            ctx.fillStyle = '#ef4444'; // Bendera Merah
+            // Tiang & Bendera Kemenangan HD
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillRect(flag.x + 10, flag.y, 6, flag.height);
+            ctx.fillStyle = '#f43f5e';
             ctx.beginPath();
-            ctx.moveTo(flag.x + 14, flag.y);
-            ctx.lineTo(flag.x + 60, flag.y + 25);
-            ctx.lineTo(flag.x + 14, flag.y + 50);
+            ctx.moveTo(flag.x + 16, flag.y + 10);
+            ctx.lineTo(flag.x + 65, flag.y + 35);
+            ctx.lineTo(flag.x + 16, flag.y + 60);
             ctx.closePath();
             ctx.fill();
+            // Bola Emas Atas Tiang
+            ctx.fillStyle = '#fbbf24';
+            ctx.beginPath();
+            ctx.arc(flag.x + 13, flag.y, 10, 0, Math.PI * 2);
+            ctx.fill();
 
-            // Koin Emas
+            // Koin Emas HD Berputar & Mengkilap
             coins.forEach(c => {
                 if (!c.collected) {
-                    ctx.fillStyle = '#facc15';
+                    const floatY = c.y + Math.sin(globalTick * 0.08 + c.floatOffset) * 4;
+                    const scaleX = Math.abs(Math.cos(globalTick * 0.08));
+
+                    ctx.save();
+                    ctx.translate(c.x + c.width / 2, floatY + c.height / 2);
+                    ctx.scale(scaleX, 1);
+
+                    const coinGrad = ctx.createRadialGradient(0, 0, 2, 0, 0, 10);
+                    coinGrad.addColorStop(0, '#fef08a');
+                    coinGrad.addColorStop(0.7, '#eab308');
+                    coinGrad.addColorStop(1, '#ca8a04');
+
+                    ctx.fillStyle = coinGrad;
                     ctx.beginPath();
-                    ctx.ellipse(c.x + c.width / 2, c.y + c.height / 2, c.width / 2, c.height / 2, 0, 0, Math.PI * 2);
+                    ctx.arc(0, 0, 10, 0, Math.PI * 2);
                     ctx.fill();
-                    ctx.strokeStyle = '#ca8a04';
+
+                    ctx.strokeStyle = '#78350f';
+                    ctx.lineWidth = 1.5;
                     ctx.stroke();
+
+                    ctx.restore();
                 }
             });
 
-            // Musuh (Goomba)
+            // Musuh Goomba HD
             enemies.forEach(e => {
                 if (e.alive) {
-                    ctx.fillStyle = '#78350f'; // Tubuh Cokelat
-                    ctx.beginPath();
-                    ctx.arc(e.x + 15, e.y + 15, 15, Math.PI, 0, false);
-                    ctx.fillRect(e.x, e.y + 15, 30, 12);
-                    ctx.fill();
-
-                    // Mata Musuh
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(e.x + 5, e.y + 12, 6, 8);
-                    ctx.fillRect(e.x + 19, e.y + 12, 6, 8);
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(e.x + 7, e.y + 15, 3, 4);
-                    ctx.fillRect(e.x + 19, e.y + 15, 3, 4);
+                    drawGoombaHD(e);
                 }
             });
 
-            // Karakter Utama (Pahlawan Bergaya Mario)
+            // Karakter Mario HD
+            drawMarioHD();
+
+            // Render Partikel HD
+            particles.forEach(part => {
+                ctx.fillStyle = part.color;
+                ctx.globalAlpha = part.life / part.maxLife;
+                ctx.fillRect(part.x, part.y, part.size, part.size);
+                ctx.globalAlpha = 1.0;
+            });
+
+            ctx.restore();
+        }
+
+        // Menggambar Pegunungan Parallax HD
+        function drawHills() {
+            const hillPositions = [150, 750, 1350, 2000, 2600];
+            hillPositions.forEach(hx => {
+                const hillGrad = ctx.createLinearGradient(0, 220, 0, 360);
+                hillGrad.addColorStop(0, '#15803d');
+                hillGrad.addColorStop(1, '#064e3b');
+                ctx.fillStyle = hillGrad;
+                ctx.beginPath();
+                ctx.arc(hx, 360, 110, Math.PI, 0);
+                ctx.fill();
+
+                // Highlight Pegunungan
+                ctx.fillStyle = 'rgba(255,255,255,0.08)';
+                ctx.beginPath();
+                ctx.arc(hx - 15, 360, 95, Math.PI, Math.PI * 1.5);
+                ctx.fill();
+            });
+        }
+
+        // Menggambar Awan Parallax HD
+        function drawClouds() {
+            ctx.fillStyle = 'rgba(241, 245, 249, 0.75)';
+            const cloudPositions = [120, 480, 880, 1280, 1680, 2180, 2580];
+            cloudPositions.forEach(cx => {
+                const cy = 70 + Math.sin(cx + globalTick * 0.02) * 5;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+                ctx.arc(cx + 20, cy - 10, 28, 0, Math.PI * 2);
+                ctx.arc(cx + 45, cy, 22, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // Desain Visual Goomba HD
+        function drawGoombaHD(e) {
+            ctx.save();
+            ctx.translate(e.x, e.y);
+
+            // Kepala Jamur Cokelat
+            const headGrad = ctx.createLinearGradient(0, 0, 0, e.height);
+            headGrad.addColorStop(0, '#b45309');
+            headGrad.addColorStop(1, '#451a03');
+            ctx.fillStyle = headGrad;
+
+            ctx.beginPath();
+            ctx.arc(16, 14, 16, Math.PI, 0);
+            ctx.fillRect(0, 14, 32, 10);
+            ctx.fill();
+
+            // Kaki Berjalan Goomba
+            ctx.fillStyle = '#1c1917';
+            const legOffset = Math.sin(e.animTick * 0.2) * 3;
+            ctx.fillRect(2, 22 + legOffset, 10, 10);
+            ctx.fillRect(20, 22 - legOffset, 10, 10);
+
+            // Mata HD & Alis
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(6, 10, 7, 10);
+            ctx.fillRect(19, 10, 7, 10);
+
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(8, 12, 3, 6);
+            ctx.fillRect(19, 12, 3, 6);
+
+            // Alis Galak
+            ctx.strokeStyle = '#451a03';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(4, 8); ctx.lineTo(13, 12);
+            ctx.moveTo(28, 8); ctx.lineTo(19, 12);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // Desain Visual Karakter Mario HD
+        function drawMarioHD() {
             ctx.save();
             if (player.facingLeft) {
                 ctx.translate(player.x + player.width, player.y);
@@ -679,58 +851,81 @@
                 ctx.translate(player.x, player.y);
             }
 
-            // Topi Merah
-            ctx.fillStyle = '#ef4444';
+            // Topi Merah HD
+            ctx.fillStyle = '#dc2626';
             ctx.fillRect(4, 0, 24, 8);
-            ctx.fillRect(8, 0, 22, 10);
+            ctx.fillRect(8, -2, 18, 6);
+            ctx.fillStyle = '#ef4444'; // Highlight Topi
+            ctx.fillRect(6, 0, 20, 3);
 
-            // Wajah & Kulit
+            // M Wajah / Lambang Topi
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(16, 3, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Kulit Wajah
             ctx.fillStyle = '#fde047';
             ctx.fillRect(8, 8, 18, 12);
 
-            // Baju Merah
-            ctx.fillStyle = '#ef4444';
+            // Hidung Bulat HD
+            ctx.fillStyle = '#facc15';
+            ctx.beginPath();
+            ctx.arc(24, 12, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Kumis Khas
+            ctx.fillStyle = '#1c1917';
+            ctx.fillRect(14, 14, 12, 4);
+
+            // Mata
+            ctx.fillStyle = '#0284c7';
+            ctx.fillRect(18, 9, 3, 4);
+
+            // Baju Merah HD
+            ctx.fillStyle = '#dc2626';
             ctx.fillRect(6, 20, 20, 10);
 
-            // Celana Kodok / Overalls Biru
-            ctx.fillStyle = '#2563eb';
+            // Sarung Tangan Putih
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(2, 22, 5, 6);
+            ctx.fillRect(25, 22, 5, 6);
+
+            // Celana Overalls Biru HD
+            ctx.fillStyle = '#1d4ed8';
             ctx.fillRect(8, 26, 16, 12);
 
-            // Sepatu Cokelat
+            // Kancing Emas Celana
+            ctx.fillStyle = '#facc15';
+            ctx.fillRect(10, 28, 3, 3);
+            ctx.fillRect(19, 28, 3, 3);
+
+            // Sepatu Cokelat HD
             ctx.fillStyle = '#451a03';
             if (player.grounded && Math.abs(player.vx) > 0.5) {
-                // Kakinya bergantian saat jalan
-                if (player.animFrame === 1) {
-                    ctx.fillRect(2, 36, 10, 6);
-                    ctx.fillRect(16, 32, 10, 6);
+                if (player.animFrame % 2 === 0) {
+                    ctx.fillRect(2, 38, 11, 6);
+                    ctx.fillRect(18, 34, 11, 6);
                 } else {
-                    ctx.fillRect(4, 34, 10, 6);
-                    ctx.fillRect(18, 36, 10, 6);
+                    ctx.fillRect(4, 34, 11, 6);
+                    ctx.fillRect(20, 38, 11, 6);
                 }
             } else {
-                ctx.fillRect(4, 36, 10, 6);
-                ctx.fillRect(18, 36, 10, 6);
+                ctx.fillRect(4, 38, 11, 6);
+                ctx.fillRect(18, 38, 11, 6);
             }
-
-            ctx.restore();
-
-            // Partikel Visual
-            particles.forEach(part => {
-                ctx.fillStyle = part.color;
-                ctx.fillRect(part.x, part.y, part.size, part.size);
-            });
 
             ctx.restore();
         }
 
-        // Game Loop Utama (60 FPS)
+        // Loop Game Utama
         function gameLoop() {
             update();
             render();
             requestAnimationFrame(gameLoop);
         }
 
-        // Memulai & Mengakhiri Permainan
+        // Mulai & Selesai Permainan
         function startGame() {
             initAudio();
             lives = 3;
@@ -746,19 +941,19 @@
             isGameStateRunning = false;
             overlayScreen.classList.remove('hidden');
             if (isWin) {
-                overlayTitle.innerText = "SELAMAT! KAMU MENANG! 🎉";
-                overlaySubtitle.innerText = `Kamu berhasil menyelesaikan level dengan skor ${gameScore} & mengumpulkan ${coinsCollected} koin!`;
-                startBtn.innerText = "Main Lagi ↺";
+                overlayTitle.innerText = "SELAMAT! MENANG! 🎉";
+                overlaySubtitle.innerText = `Kamu berhasil menyelesaikan level HD ini dengan Skor ${gameScore} & mengumpulkan ${coinsCollected} koin!`;
+                startBtn.innerText = "MAIN LAGI ↺";
             } else {
                 overlayTitle.innerText = "GAME OVER 💀";
                 overlaySubtitle.innerText = `Kamu kehabisan nyawa! Skor Akhir: ${gameScore}`;
-                startBtn.innerText = "Coba Lagi ↺";
+                startBtn.innerText = "COBA LAGI ↺";
             }
         }
 
         startBtn.addEventListener('click', startGame);
 
-        // Render Awal Sebelum Game Mulai
+        // Render Pertama kali
         buildLevel();
         render();
         requestAnimationFrame(gameLoop);
