@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Super Mario HD Platformer</title>
+    <title>Super Mario HD Platformer - Multi Stage</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -35,23 +35,27 @@
 <body class="bg-slate-950 text-white min-h-screen flex flex-col justify-between items-center select-none p-2 md:p-4">
 
     <!-- Header Status & Skor HD -->
-    <header class="w-full max-w-4xl flex justify-between items-center bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-5 py-2.5 rounded-2xl shadow-2xl mb-2 z-10 glow-box">
-        <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl filter drop-shadow">🍄</span>
-                <span id="scoreText" class="font-extrabold text-yellow-400 text-lg md:text-xl tracking-wide">SKOR: 0</span>
+    <header class="w-full max-w-4xl flex justify-between items-center bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-4 md:px-5 py-2.5 rounded-2xl shadow-2xl mb-2 z-10 glow-box">
+        <div class="flex items-center space-x-3 md:space-x-5">
+            <div class="flex items-center space-x-1.5">
+                <span class="text-xl md:text-2xl filter drop-shadow">🗺️</span>
+                <span id="stageText" class="font-extrabold text-cyan-300 text-sm md:text-xl tracking-wide">STAGE: 1/3</span>
             </div>
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl filter drop-shadow">🪙</span>
-                <span id="coinsText" class="font-extrabold text-amber-300 text-lg md:text-xl tracking-wide">KOIN: 0</span>
+            <div class="flex items-center space-x-1.5">
+                <span class="text-xl md:text-2xl filter drop-shadow">🍄</span>
+                <span id="scoreText" class="font-extrabold text-yellow-400 text-sm md:text-xl tracking-wide">SKOR: 0</span>
+            </div>
+            <div class="flex items-center space-x-1.5">
+                <span class="text-xl md:text-2xl filter drop-shadow">🪙</span>
+                <span id="coinsText" class="font-extrabold text-amber-300 text-sm md:text-xl tracking-wide">KOIN: 0</span>
             </div>
         </div>
-        <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-1.5">
-                <span class="text-2xl filter drop-shadow">❤️</span>
-                <span id="livesText" class="font-extrabold text-red-400 text-lg md:text-xl tracking-wide">x 3</span>
+        <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-1">
+                <span class="text-xl md:text-2xl filter drop-shadow">❤️</span>
+                <span id="livesText" class="font-extrabold text-red-400 text-sm md:text-xl tracking-wide">x 3</span>
             </div>
-            <button id="audioToggle" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 px-3 py-1.5 rounded-xl text-sm font-semibold transition flex items-center gap-1 shadow">
+            <button id="audioToggle" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 px-2.5 py-1 md:px-3 md:py-1.5 rounded-xl text-xs md:text-sm font-semibold transition flex items-center gap-1 shadow">
                 🔊 Suara
             </button>
         </div>
@@ -61,17 +65,17 @@
     <main class="relative w-full max-w-4xl flex-1 flex justify-center items-center overflow-hidden rounded-3xl border-2 border-slate-700/60 bg-slate-900 shadow-2xl glow-box">
         <canvas id="gameCanvas" width="800" height="450" class="w-full h-auto max-h-[72vh] object-contain block"></canvas>
 
-        <!-- UI Layar Game Over / Menang / Start HD -->
-        <div id="overlayScreen" class="absolute inset-0 bg-slate-950/80 backdrop-blur-md flex flex-col justify-center items-center text-center p-6 transition-all duration-300">
-            <div class="bg-slate-900/90 border border-slate-700 p-8 rounded-3xl max-w-lg shadow-2xl flex flex-col items-center">
-                <div class="text-5xl mb-2">⭐</div>
-                <h1 id="overlayTitle" class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 mb-3 drop-shadow-lg tracking-wider">
+        <!-- UI Layar Game Over / Menang / Start / Next Stage HD -->
+        <div id="overlayScreen" class="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex flex-col justify-center items-center text-center p-6 transition-all duration-300">
+            <div class="bg-slate-900/90 border border-slate-700 p-6 md:p-8 rounded-3xl max-w-lg shadow-2xl flex flex-col items-center">
+                <div id="overlayIcon" class="text-5xl mb-2">⭐</div>
+                <h1 id="overlayTitle" class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 mb-3 drop-shadow-lg tracking-wider">
                     SUPER MARIO HD
                 </h1>
                 <p id="overlaySubtitle" class="text-slate-300 text-sm md:text-base mb-6 leading-relaxed">
-                    Jelajahi dunia HD! Gunakan keyboard (<span class="text-yellow-400 font-semibold">Panah / WASD</span>) atau tombol sentuh untuk berlari, melompat, dan mengumpulkan koin!
+                    Jelajahi 3 Stage dunia HD! Gunakan keyboard (<span class="text-yellow-400 font-semibold">Panah / WASD</span>) atau tombol sentuh untuk berlari, melompat, dan mengumpulkan koin!
                 </p>
-                <button id="startBtn" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-black text-lg md:text-xl px-10 py-4 rounded-2xl shadow-xl shadow-green-600/30 transform transition active:scale-95 border border-green-400/40 tracking-wider">
+                <button id="startBtn" class="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-black text-lg md:text-xl px-8 py-3.5 md:px-10 md:py-4 rounded-2xl shadow-xl shadow-green-600/30 transform transition active:scale-95 border border-green-400/40 tracking-wider">
                     MULAI BERMAIN ▶
                 </button>
             </div>
@@ -105,12 +109,14 @@
         const ctx = canvas.getContext('2d');
 
         // Elemen UI
+        const stageText = document.getElementById('stageText');
         const scoreText = document.getElementById('scoreText');
         const coinsText = document.getElementById('coinsText');
         const livesText = document.getElementById('livesText');
         const overlayScreen = document.getElementById('overlayScreen');
         const overlayTitle = document.getElementById('overlayTitle');
         const overlaySubtitle = document.getElementById('overlaySubtitle');
+        const overlayIcon = document.getElementById('overlayIcon');
         const startBtn = document.getElementById('startBtn');
         const audioToggle = document.getElementById('audioToggle');
 
@@ -250,13 +256,17 @@
         bindTouch('btnRight', 'right');
         bindTouch('btnJump', 'jump');
 
-        // Parameter Utama Game
+        // Parameter Utama Game & Multi Stage
         const GRAVITY = 0.52;
+        const MAX_STAGES = 3;
+        let currentStage = 1;
+
         let cameraX = 0;
         let gameScore = 0;
         let coinsCollected = 0;
         let lives = 3;
         let isGameStateRunning = false;
+        let overlayState = 'START'; // 'START', 'STAGE_CLEAR', 'WIN', 'GAME_OVER'
         let globalTick = 0;
 
         // Player (Mario HD)
@@ -283,106 +293,188 @@
         let flag = { x: 2650, y: 130, width: 24, height: 230, reached: false };
         let stars = [];
 
-        // Inisialisasi Bintang untuk Latar Belakang Night Sky
-        for (let i = 0; i < 60; i++) {
+        // Inisialisasi Bintang Latar Belakang
+        for (let i = 0; i < 70; i++) {
             stars.push({
-                x: Math.random() * 3200,
+                x: Math.random() * 3600,
                 y: Math.random() * 220,
                 size: Math.random() * 2 + 1,
                 alpha: Math.random()
             });
         }
 
-        // Generasi Level HD
-        function buildLevel() {
+        // Generasi Level Berdasarkan Stage (Multi Stage System)
+        function buildLevel(stage) {
             platforms = [];
             coins = [];
             enemies = [];
             particles = [];
 
-            // Tanah Dasar
-            const groundSegments = [
-                { start: 0, width: 850 },
-                { start: 980, width: 620 },
-                { start: 1700, width: 550 },
-                { start: 2320, width: 750 }
-            ];
-
-            groundSegments.forEach(seg => {
-                platforms.push({ x: seg.start, y: 360, width: seg.width, height: 90, type: 'ground' });
-            });
-
-            // Blok & Pipa
-            const blockData = [
-                // Area Awal
-                { x: 250, y: 250, type: 'question', item: 'coin' },
-                { x: 290, y: 250, type: 'brick' },
-                { x: 330, y: 250, type: 'question', item: 'coin' },
-                { x: 370, y: 250, type: 'brick' },
-                { x: 330, y: 150, type: 'question', item: 'coin' },
-
-                // Pipa
-                { x: 550, y: 290, width: 52, height: 70, type: 'pipe' },
-                { x: 720, y: 250, width: 52, height: 110, type: 'pipe' },
-
-                // Area Tengah
-                { x: 1020, y: 250, type: 'brick' },
-                { x: 1060, y: 250, type: 'question', item: 'coin' },
-                { x: 1100, y: 250, type: 'brick' },
-                { x: 1220, y: 190, type: 'brick' },
-                { x: 1260, y: 190, type: 'question', item: 'coin' },
-                { x: 1300, y: 190, type: 'brick' },
-
-                { x: 1450, y: 270, width: 52, height: 90, type: 'pipe' },
-
-                // Platform Melayang
-                { x: 1600, y: 270, width: 80, height: 22, type: 'platform' },
-                { x: 1750, y: 210, width: 90, height: 22, type: 'platform' },
-                { x: 1920, y: 250, type: 'question', item: 'coin' },
-                { x: 1960, y: 250, type: 'question', item: 'coin' },
-
-                // Tangga Akhir
-                { x: 2420, y: 320, width: 40, height: 40, type: 'brick' },
-                { x: 2460, y: 280, width: 40, height: 80, type: 'brick' },
-                { x: 2500, y: 240, width: 40, height: 120, type: 'brick' },
-                { x: 2540, y: 200, width: 40, height: 160, type: 'brick' }
-            ];
-
-            blockData.forEach(b => {
-                platforms.push({
-                    x: b.x,
-                    y: b.y,
-                    width: b.width || 40,
-                    height: b.height || 40,
-                    type: b.type,
-                    item: b.item,
-                    hit: false,
-                    bounce: 0
+            if (stage === 1) {
+                // STAGE 1: Malam / Normal
+                const groundSegments = [
+                    { start: 0, width: 850 },
+                    { start: 980, width: 620 },
+                    { start: 1700, width: 550 },
+                    { start: 2320, width: 750 }
+                ];
+                groundSegments.forEach(seg => {
+                    platforms.push({ x: seg.start, y: 360, width: seg.width, height: 90, type: 'ground' });
                 });
-            });
 
-            // Koin Emas
-            const coinPositions = [
-                { x: 250, y: 210 }, { x: 290, y: 210 }, { x: 370, y: 210 },
-                { x: 566, y: 250 }, { x: 736, y: 210 },
-                { x: 1630, y: 230 }, { x: 1780, y: 170 },
-                { x: 2100, y: 310 }, { x: 2140, y: 310 }, { x: 2180, y: 310 }
-            ];
+                const blockData = [
+                    { x: 250, y: 250, type: 'question', item: 'coin' },
+                    { x: 290, y: 250, type: 'brick' },
+                    { x: 330, y: 250, type: 'question', item: 'coin' },
+                    { x: 370, y: 250, type: 'brick' },
+                    { x: 330, y: 150, type: 'question', item: 'coin' },
+                    { x: 550, y: 290, width: 52, height: 70, type: 'pipe' },
+                    { x: 720, y: 250, width: 52, height: 110, type: 'pipe' },
+                    { x: 1020, y: 250, type: 'brick' },
+                    { x: 1060, y: 250, type: 'question', item: 'coin' },
+                    { x: 1100, y: 250, type: 'brick' },
+                    { x: 1220, y: 190, type: 'brick' },
+                    { x: 1260, y: 190, type: 'question', item: 'coin' },
+                    { x: 1300, y: 190, type: 'brick' },
+                    { x: 1450, y: 270, width: 52, height: 90, type: 'pipe' },
+                    { x: 1600, y: 270, width: 80, height: 22, type: 'platform' },
+                    { x: 1750, y: 210, width: 90, height: 22, type: 'platform' },
+                    { x: 1920, y: 250, type: 'question', item: 'coin' },
+                    { x: 1960, y: 250, type: 'question', item: 'coin' },
+                    { x: 2420, y: 320, width: 40, height: 40, type: 'brick' },
+                    { x: 2460, y: 280, width: 40, height: 80, type: 'brick' },
+                    { x: 2500, y: 240, width: 40, height: 120, type: 'brick' },
+                    { x: 2540, y: 200, width: 40, height: 160, type: 'brick' }
+                ];
+                blockData.forEach(b => platforms.push({ ...b, width: b.width || 40, height: b.height || 40, hit: false, bounce: 0 }));
 
-            coinPositions.forEach(c => {
-                coins.push({ x: c.x, y: c.y, width: 20, height: 24, collected: false, floatOffset: Math.random() * Math.PI });
-            });
+                const coinPositions = [
+                    { x: 250, y: 210 }, { x: 290, y: 210 }, { x: 370, y: 210 },
+                    { x: 566, y: 250 }, { x: 736, y: 210 },
+                    { x: 1630, y: 230 }, { x: 1780, y: 170 },
+                    { x: 2100, y: 310 }, { x: 2140, y: 310 }, { x: 2180, y: 310 }
+                ];
+                coinPositions.forEach(c => coins.push({ x: c.x, y: c.y, width: 20, height: 24, collected: false, floatOffset: Math.random() * Math.PI }));
 
-            // Musuh (Goomba HD)
-            enemies = [
-                { x: 460, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
-                { x: 860, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
-                { x: 1150, y: 328, width: 32, height: 32, vx: 1.3, alive: true, animTick: 0 },
-                { x: 1800, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 },
-                { x: 2220, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 }
-            ];
+                enemies = [
+                    { x: 460, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
+                    { x: 860, y: 328, width: 32, height: 32, vx: -1.3, alive: true, animTick: 0 },
+                    { x: 1150, y: 328, width: 32, height: 32, vx: 1.3, alive: true, animTick: 0 },
+                    { x: 1800, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 },
+                    { x: 2220, y: 328, width: 32, height: 32, vx: -1.5, alive: true, animTick: 0 }
+                ];
+                flag = { x: 2650, y: 130, width: 24, height: 230, reached: false };
 
-            flag.reached = false;
+            } else if (stage === 2) {
+                // STAGE 2: Senja / Tembok Rintangan & Musuh Lebih Cepat
+                const groundSegments = [
+                    { start: 0, width: 700 },
+                    { start: 820, width: 500 },
+                    { start: 1440, width: 600 },
+                    { start: 2160, width: 450 },
+                    { start: 2700, width: 700 }
+                ];
+                groundSegments.forEach(seg => {
+                    platforms.push({ x: seg.start, y: 360, width: seg.width, height: 90, type: 'ground' });
+                });
+
+                const blockData = [
+                    { x: 200, y: 260, type: 'question', item: 'coin' },
+                    { x: 240, y: 260, type: 'question', item: 'coin' },
+                    { x: 400, y: 280, width: 52, height: 80, type: 'pipe' },
+                    { x: 550, y: 220, type: 'brick' },
+                    { x: 590, y: 220, type: 'question', item: 'coin' },
+                    { x: 730, y: 280, width: 80, height: 20, type: 'platform' },
+                    { x: 860, y: 210, width: 90, height: 20, type: 'platform' },
+                    { x: 1000, y: 250, type: 'brick' },
+                    { x: 1040, y: 250, type: 'brick' },
+                    { x: 1080, y: 250, type: 'question', item: 'coin' },
+                    { x: 1250, y: 270, width: 52, height: 90, type: 'pipe' },
+                    { x: 1500, y: 260, type: 'question', item: 'coin' },
+                    { x: 1650, y: 200, width: 100, height: 20, type: 'platform' },
+                    { x: 1850, y: 240, width: 80, height: 20, type: 'platform' },
+                    { x: 2040, y: 270, width: 52, height: 90, type: 'pipe' },
+                    { x: 2250, y: 230, width: 80, height: 20, type: 'platform' },
+                    { x: 2450, y: 190, width: 80, height: 20, type: 'platform' },
+                    // Tangga akhir Stage 2
+                    { x: 2800, y: 320, width: 40, height: 40, type: 'brick' },
+                    { x: 2840, y: 280, width: 40, height: 80, type: 'brick' },
+                    { x: 2880, y: 240, width: 40, height: 120, type: 'brick' },
+                    { x: 2920, y: 200, width: 40, height: 160, type: 'brick' }
+                ];
+                blockData.forEach(b => platforms.push({ ...b, width: b.width || 40, height: b.height || 40, hit: false, bounce: 0 }));
+
+                const coinPositions = [
+                    { x: 200, y: 220 }, { x: 240, y: 220 }, { x: 750, y: 240 },
+                    { x: 880, y: 170 }, { x: 1680, y: 160 }, { x: 1870, y: 200 },
+                    { x: 2270, y: 190 }, { x: 2470, y: 150 }
+                ];
+                coinPositions.forEach(c => coins.push({ x: c.x, y: c.y, width: 20, height: 24, collected: false, floatOffset: Math.random() * Math.PI }));
+
+                enemies = [
+                    { x: 350, y: 328, width: 32, height: 32, vx: -1.8, alive: true, animTick: 0 },
+                    { x: 600, y: 328, width: 32, height: 32, vx: -1.8, alive: true, animTick: 0 },
+                    { x: 920, y: 328, width: 32, height: 32, vx: 1.8, alive: true, animTick: 0 },
+                    { x: 1550, y: 328, width: 32, height: 32, vx: -2.0, alive: true, animTick: 0 },
+                    { x: 1800, y: 328, width: 32, height: 32, vx: 2.0, alive: true, animTick: 0 },
+                    { x: 2300, y: 328, width: 32, height: 32, vx: -2.0, alive: true, animTick: 0 }
+                ];
+                flag = { x: 3020, y: 130, width: 24, height: 230, reached: false };
+
+            } else if (stage === 3) {
+                // STAGE 3: Gunung Berapi / Lava Zone / Paling Sukar
+                const groundSegments = [
+                    { start: 0, width: 600 },
+                    { start: 720, width: 450 },
+                    { start: 1280, width: 500 },
+                    { start: 1900, width: 400 },
+                    { start: 2420, width: 800 }
+                ];
+                groundSegments.forEach(seg => {
+                    platforms.push({ x: seg.start, y: 360, width: seg.width, height: 90, type: 'ground' });
+                });
+
+                const blockData = [
+                    { x: 180, y: 250, type: 'question', item: 'coin' },
+                    { x: 220, y: 250, type: 'brick' },
+                    { x: 260, y: 250, type: 'question', item: 'coin' },
+                    { x: 420, y: 270, width: 52, height: 90, type: 'pipe' },
+                    { x: 620, y: 240, width: 80, height: 20, type: 'platform' },
+                    { x: 800, y: 210, width: 80, height: 20, type: 'platform' },
+                    { x: 980, y: 260, type: 'question', item: 'coin' },
+                    { x: 1020, y: 260, type: 'question', item: 'coin' },
+                    { x: 1180, y: 210, width: 90, height: 20, type: 'platform' },
+                    { x: 1380, y: 270, width: 52, height: 90, type: 'pipe' },
+                    { x: 1550, y: 220, type: 'brick' },
+                    { x: 1590, y: 220, type: 'question', item: 'coin' },
+                    { x: 1630, y: 220, type: 'brick' },
+                    { x: 1800, y: 230, width: 80, height: 20, type: 'platform' },
+                    { x: 2000, y: 190, width: 80, height: 20, type: 'platform' },
+                    { x: 2200, y: 230, width: 80, height: 20, type: 'platform' },
+                    { x: 2520, y: 320, width: 40, height: 40, type: 'brick' },
+                    { x: 2560, y: 280, width: 40, height: 80, type: 'brick' },
+                    { x: 2600, y: 240, width: 40, height: 120, type: 'brick' },
+                    { x: 2640, y: 200, width: 40, height: 160, type: 'brick' }
+                ];
+                blockData.forEach(b => platforms.push({ ...b, width: b.width || 40, height: b.height || 40, hit: false, bounce: 0 }));
+
+                const coinPositions = [
+                    { x: 180, y: 210 }, { x: 260, y: 210 }, { x: 640, y: 200 },
+                    { x: 820, y: 170 }, { x: 1200, y: 170 }, { x: 1590, y: 180 },
+                    { x: 1820, y: 190 }, { x: 2020, y: 150 }, { x: 2220, y: 190 }
+                ];
+                coinPositions.forEach(c => coins.push({ x: c.x, y: c.y, width: 20, height: 24, collected: false, floatOffset: Math.random() * Math.PI }));
+
+                enemies = [
+                    { x: 300, y: 328, width: 32, height: 32, vx: -2.2, alive: true, animTick: 0 },
+                    { x: 500, y: 328, width: 32, height: 32, vx: 2.2, alive: true, animTick: 0 },
+                    { x: 820, y: 328, width: 32, height: 32, vx: -2.3, alive: true, animTick: 0 },
+                    { x: 1400, y: 328, width: 32, height: 32, vx: -2.5, alive: true, animTick: 0 },
+                    { x: 2000, y: 328, width: 32, height: 32, vx: 2.5, alive: true, animTick: 0 },
+                    { x: 2480, y: 328, width: 32, height: 32, vx: -2.5, alive: true, animTick: 0 }
+                ];
+                flag = { x: 2750, y: 130, width: 24, height: 230, reached: false };
+            }
         }
 
         function resetPlayer() {
@@ -520,13 +612,20 @@
                 }
             });
 
-            // Logika Bendera (Menang)
+            // Logika Bendera (Mencapai Finish)
             if (!flag.reached && checkCollision(player, flag)) {
                 flag.reached = true;
-                gameScore += 1200 + lives * 400;
+                gameScore += 1000 + lives * 300;
                 playSound('win');
                 addParticles(flag.x + 10, flag.y + 20, '#f43f5e', 25, true);
-                setTimeout(() => { endGame(true); }, 1000);
+
+                setTimeout(() => {
+                    if (currentStage < MAX_STAGES) {
+                        showStageCompleteOverlay();
+                    } else {
+                        endGame(true);
+                    }
+                }, 900);
             }
 
             // Update Partikel
@@ -548,6 +647,7 @@
             }
 
             // Update Header UI
+            stageText.innerText = `STAGE: ${currentStage}/${MAX_STAGES}`;
             scoreText.innerText = `SKOR: ${gameScore}`;
             coinsText.innerText = `KOIN: ${coinsCollected}`;
             livesText.innerText = `x ${lives}`;
@@ -574,11 +674,24 @@
 
         // ===== RENDERING GRAFIS HD =====
         function render() {
-            // Latar Belakang Gradien Langit Malam Senja HD
+            // Gradien Langit Berdasarkan Stage
             const bgGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            bgGradient.addColorStop(0, '#0f172a');
-            bgGradient.addColorStop(0.5, '#1e1b4b');
-            bgGradient.addColorStop(1, '#312e81');
+            if (currentStage === 1) {
+                // Stage 1: Malam Biru Indigo
+                bgGradient.addColorStop(0, '#0f172a');
+                bgGradient.addColorStop(0.5, '#1e1b4b');
+                bgGradient.addColorStop(1, '#312e81');
+            } else if (currentStage === 2) {
+                // Stage 2: Senja Jingga Sunset
+                bgGradient.addColorStop(0, '#451a03');
+                bgGradient.addColorStop(0.5, '#9a3412');
+                bgGradient.addColorStop(1, '#ea580c');
+            } else {
+                // Stage 3: Gunung Berapi Lava Dark Zone
+                bgGradient.addColorStop(0, '#18181b');
+                bgGradient.addColorStop(0.5, '#450a0a');
+                bgGradient.addColorStop(1, '#7f1d1d');
+            }
             ctx.fillStyle = bgGradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -598,6 +711,15 @@
             // Awan Parallax HD
             drawClouds();
 
+            // Efek Gelombang Lava di Bagian Bawah untuk Stage 3
+            if (currentStage === 3) {
+                ctx.fillStyle = '#ef4444';
+                for (let xL = 0; xL < 3500; xL += 40) {
+                    const lavaY = 410 + Math.sin(globalTick * 0.1 + xL) * 6;
+                    ctx.fillRect(xL, lavaY, 40, 40);
+                }
+            }
+
             // Render Platform & Blok HD
             platforms.forEach(p => {
                 const drawY = p.y - (p.bounce || 0);
@@ -605,13 +727,18 @@
                 if (p.type === 'ground') {
                     // Rumput Atas Gradien HD
                     const grassGrad = ctx.createLinearGradient(p.x, drawY, p.x, drawY + 18);
-                    grassGrad.addColorStop(0, '#4ade80');
-                    grassGrad.addColorStop(1, '#16a34a');
+                    if (currentStage === 3) {
+                        grassGrad.addColorStop(0, '#f97316');
+                        grassGrad.addColorStop(1, '#b91c1c');
+                    } else {
+                        grassGrad.addColorStop(0, '#4ade80');
+                        grassGrad.addColorStop(1, '#16a34a');
+                    }
                     ctx.fillStyle = grassGrad;
                     ctx.fillRect(p.x, drawY, p.width, 18);
 
                     // Detail Garis Rumput
-                    ctx.fillStyle = '#bbf7d0';
+                    ctx.fillStyle = currentStage === 3 ? '#fed7aa' : '#bbf7d0';
                     for (let xG = p.x + 4; xG < p.x + p.width; xG += 16) {
                         ctx.fillRect(xG, drawY, 3, 6);
                     }
@@ -667,7 +794,7 @@
                     ctx.lineWidth = 2;
                     ctx.strokeRect(p.x, drawY, p.width, p.height);
 
-                    // Tanda Tanya HD dengan Bayangan
+                    // Tanda Tanya HD
                     if (!p.hit) {
                         ctx.fillStyle = '#78350f';
                         ctx.font = '900 24px sans-serif';
@@ -767,11 +894,16 @@
 
         // Menggambar Pegunungan Parallax HD
         function drawHills() {
-            const hillPositions = [150, 750, 1350, 2000, 2600];
+            const hillPositions = [150, 750, 1350, 2000, 2600, 3100];
             hillPositions.forEach(hx => {
                 const hillGrad = ctx.createLinearGradient(0, 220, 0, 360);
-                hillGrad.addColorStop(0, '#15803d');
-                hillGrad.addColorStop(1, '#064e3b');
+                if (currentStage === 3) {
+                    hillGrad.addColorStop(0, '#7f1d1d');
+                    hillGrad.addColorStop(1, '#450a0a');
+                } else {
+                    hillGrad.addColorStop(0, '#15803d');
+                    hillGrad.addColorStop(1, '#064e3b');
+                }
                 ctx.fillStyle = hillGrad;
                 ctx.beginPath();
                 ctx.arc(hx, 360, 110, Math.PI, 0);
@@ -787,8 +919,8 @@
 
         // Menggambar Awan Parallax HD
         function drawClouds() {
-            ctx.fillStyle = 'rgba(241, 245, 249, 0.75)';
-            const cloudPositions = [120, 480, 880, 1280, 1680, 2180, 2580];
+            ctx.fillStyle = currentStage === 3 ? 'rgba(254, 205, 211, 0.5)' : 'rgba(241, 245, 249, 0.75)';
+            const cloudPositions = [120, 480, 880, 1280, 1680, 2180, 2580, 3080];
             cloudPositions.forEach(cx => {
                 const cy = 70 + Math.sin(cx + globalTick * 0.02) * 5;
                 ctx.beginPath();
@@ -925,13 +1057,31 @@
             requestAnimationFrame(gameLoop);
         }
 
-        // Mulai & Selesai Permainan
+        // Sistem Layar Overlay & Alur Permainan
+        function showStageCompleteOverlay() {
+            isGameStateRunning = false;
+            overlayState = 'STAGE_CLEAR';
+            overlayScreen.classList.remove('hidden');
+
+            overlayIcon.innerText = "🌟";
+            overlayTitle.innerText = `STAGE ${currentStage} SELESAI!`;
+            overlaySubtitle.innerHTML = `Hebat! Kamu berhasil menaklukkan Stage ${currentStage}!<br>Skor: <span class="text-yellow-400 font-bold">${gameScore}</span> | Koin: <span class="text-amber-300 font-bold">${coinsCollected}</span><br>Bersiaplah untuk Stage ${currentStage + 1}!`;
+            startBtn.innerText = `LANJUT KE STAGE ${currentStage + 1} ▶`;
+        }
+
         function startGame() {
             initAudio();
-            lives = 3;
-            gameScore = 0;
-            coinsCollected = 0;
-            buildLevel();
+
+            if (overlayState === 'START' || overlayState === 'WIN' || overlayState === 'GAME_OVER') {
+                currentStage = 1;
+                lives = 3;
+                gameScore = 0;
+                coinsCollected = 0;
+            } else if (overlayState === 'STAGE_CLEAR') {
+                currentStage++;
+            }
+
+            buildLevel(currentStage);
             resetPlayer();
             isGameStateRunning = true;
             overlayScreen.classList.add('hidden');
@@ -940,13 +1090,18 @@
         function endGame(isWin) {
             isGameStateRunning = false;
             overlayScreen.classList.remove('hidden');
+
             if (isWin) {
-                overlayTitle.innerText = "SELAMAT! MENANG! 🎉";
-                overlaySubtitle.innerText = `Kamu berhasil menyelesaikan level HD ini dengan Skor ${gameScore} & mengumpulkan ${coinsCollected} koin!`;
-                startBtn.innerText = "MAIN LAGI ↺";
+                overlayState = 'WIN';
+                overlayIcon.innerText = "🏆";
+                overlayTitle.innerText = "SELAMAT! KAMU MENAMATKAN GAME!";
+                overlaySubtitle.innerText = `Luar biasa! Kamu telah menyelesaikan semua ${MAX_STAGES} Stage! Total Skor: ${gameScore} | Total Koin: ${coinsCollected}`;
+                startBtn.innerText = "MAIN DARI AWAL ↺";
             } else {
-                overlayTitle.innerText = "GAME OVER 💀";
-                overlaySubtitle.innerText = `Kamu kehabisan nyawa! Skor Akhir: ${gameScore}`;
+                overlayState = 'GAME_OVER';
+                overlayIcon.innerText = "💀";
+                overlayTitle.innerText = "GAME OVER";
+                overlaySubtitle.innerText = `Kamu kehabisan nyawa di Stage ${currentStage}! Skor Akhir: ${gameScore}`;
                 startBtn.innerText = "COBA LAGI ↺";
             }
         }
@@ -954,7 +1109,7 @@
         startBtn.addEventListener('click', startGame);
 
         // Render Pertama kali
-        buildLevel();
+        buildLevel(currentStage);
         render();
         requestAnimationFrame(gameLoop);
     </script>
